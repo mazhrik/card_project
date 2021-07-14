@@ -1,0 +1,70 @@
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <div id="mySidebar" class="sidebar">
+      <div class="logoImage">
+        <a href="/">
+          <img
+            src="{% static 'images/bbo_logo.png' %}"
+            alt="BridgeBase Logo"
+            width="100px"
+          />
+        </a>
+      </div>
+      <div>
+        <a href="/tournament">Tournaments</a>
+        <a href="/team/detail">Teams - Detail</a>
+        <a href="/team/summary">Teams - Summary</a>
+        <a href="/session/detail">Sessions - Detail</a>
+        <a href="/session/summary">Sessions - Summary</a>
+        <button class="dropdown-btn">
+          Matchups
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/matchups">Matchups</a>
+          <a href="/matchups/td-assignment">Table TD Assignment</a>
+        </div>
+        <a href="#">Matches</a>
+        <button class="dropdown-btn">
+          TDs
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/td">TDs</a>
+          <a href="/td/add">Add TD</a>
+        </div>
+        <a href="/faqs">FAQs</a>
+      </div>
+    </div>
+
+    <script>
+      /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+          } else {
+            dropdownContent.style.display = "block";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

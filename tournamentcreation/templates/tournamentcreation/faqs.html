@@ -1,0 +1,106 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %} {% static 'css/faqs.css' %} {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %} FAQs {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+
+<div class="main-container">
+  <div>
+    <div>
+      <h1>FAQs</h1>
+    </div>
+    <div>
+      <h3>FAQs for BBO Teams Application</h3>
+    </div>
+    <div>Question: What is the purpose of this application?</div>
+    <div>
+      Answer: This application is designed to generate a file which can be sent
+      to BBO to start multiple team matches at the same time
+    </div>
+    <div>Question: What is the tournament name?</div>
+    <div>
+      Answer: It is a name that describes your tournament. Try to keep it short
+      and meaningful. E.g “USBF Mixed Trials”, “D22 GNT Finals”.
+    </div>
+    <div>Question: What is a Session?</div>
+    <div>
+      Anwser: A session is a group of matches where the same teams are playing
+      against each other. This could be a Round in a Swiss game or a Knockout. A
+      session may have more than one segment if the boards played will be split
+      and played at different times (normally not applicable to Swiss format).
+    </div>
+    <div>Question: How do I name my sessions?</div>
+    <div>
+      Anwser: Give them names that are meaningful and descriptive. E.g. “Day 1
+      Swiss Round 3”, “Knockouts Semifinal”
+    </div>
+    <div>Question: When should I submit usernames to BBO for validation?</div>
+    <div>
+      Anwser: Usernames should be submitted to BBO for validation no later than
+      3 days before the start of the tournament.
+    </div>
+    <div>
+      Question: What should I do if there is a last minute lineup change?
+    </div>
+    <div>
+      Anwser: If there is a last minute lineup change, make the changes on the
+      appropriate page(s) and regenerate the TeamMatch file and resubmit to BBO.
+    </div>
+    <div>
+      Question: Can I add players to a team after the tournament starts?
+    </div>
+    <div>
+      Anwser: The system will allow you to add players at any time. Be sure to
+      check the Conditions of contest to be sure it is permitted.
+    </div>
+    <div>Question: Why are there two places to assign TDs?</div>
+    <div>
+      Anwser: TDs can be assigned “globally” (meaning they are assigned to all
+      matches) or they can be assigned “locally” (meaning they are just assigned
+      to certain tables).
+    </div>
+    <div>Question: What is the barometer option?</div>
+    <div>
+      Anwser: The barometer option determines whether players see the results
+      during the match (Option set to “Yes”) or only at the end of the match
+      (Option set to “No”). It is most common to leave the barometer set to “N”
+      to prevent a team from changing strategies based on a known advantage or
+      disadvantage in previously played boards.
+    </div>
+    <div>Question: What is the undo option?</div>
+    <div>
+      Anwser: The undo option allows the players at the table to request an undo
+      for a bid or play. Play will stop and the opponents must approve or deny
+      the undo request. If this is set to “No”, then players cannot request an
+      undo and would need to call a TD for assistance.
+    </div>
+    <div>Question: Who/what is the host?</div>
+    <div>
+      Anwser: The BBO host/username is the creator of the tournament and will be
+      the host of all matches. This userid must have sufficient rights to create
+      the appropriate number of matches. If you are not sure about the host and
+      its permissions, contact your BBO coordinator.
+    </div>
+    <div>
+      Question: Can I use the same predealt hands in all the matches instead of
+      random hands?
+    </div>
+    <div>
+      Anwser: You may use predealt hands which will be used in each match. To
+      add them, you will need to check the box in the Matches screen and add
+      them to the generated Match Creation file after the description and before
+      the first Match. The format is Board [tab] number=x [tab] deal
+      =SxxxxHxxDxxxCxxx, SxxHxxxDxxxCxxx etc for all four hands starting with
+      the South hand and ending with a Carriage Return. The boards are simply
+      used in the order they appear. Board numbers will start from 1 unless the
+      Starting board number setting in the Matches screen is used to specify a
+      different starting board number.
+    </div>
+  </div>
+</div>
+
+{% endblock %}

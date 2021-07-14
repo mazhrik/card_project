@@ -1,0 +1,50 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %}{% static 'css/td-add.css' %}{% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %}Add TD{% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+<!-- ---------------------------------------------------------------------- -->
+
+<div class="main-container">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div>
+      <h3>Add TD</h3>
+
+      <div>
+        <label for="tournament-info">for</label>
+        <select name="tournament-info" id="tournament-info">
+          <option value="0">None</option>
+          {% for i in tournament_objects %}
+          <option value="{{ i.pk }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="bbo-username">BBO Username:</label>
+        <input type="text" name="bbo-username" id="bbo-username" />
+      </div>
+      <div>
+        <label for="name">Full Name:</label>
+        <input type="text" name="name" id="name" />
+      </div>
+      <div>
+        <label for="is-global">Global TD:</label>
+        <input type="checkbox" name="is-global" id="is-global" value="on" />
+      </div>
+      <div>
+        <input type="button" name="cancel" id="cancel" value="Cancel" />
+      </div>
+      <div>
+        <input type="submit" name="add-td" id="add-td" value="Add TD" />
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

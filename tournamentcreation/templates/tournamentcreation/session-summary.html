@@ -1,0 +1,57 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %} {% static 'css/session-summary.css' %} {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %} Session Summary {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+
+<div class="main-container">
+  <h1>Sessions Summary</h1>
+
+  <div>
+    <label for="tournament-info">for</label>
+    <select name="tournament-info" id="tournament-info">
+      {% for i in tournament_objects %}
+      <option value="{{ i.pk }}">{{ i }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div>
+    <div>
+      <span>Click on Session Name to view/edit session details</span>
+    </div>
+    <div>
+      <input
+        type="button"
+        name="add-new-session"
+        id="add-new-teamsession"
+        value="Add New Session"
+      />
+    </div>
+  </div>
+
+  <div>
+    <table>
+      <tr>
+        <th>Session Name</th>
+        <th>Format</th>
+        <th>Scoring</th>
+        <th>Number of Segments</th>
+      </tr>
+      {% for i in session_objects %}
+      <tr name="{{ i.pk }}" id="{{ i.pk }}">
+        <td name="session-name" id="session-name">{{ i.session_name }}</td>
+        <td name="format" id="format">{{ i.format }}</td>
+        <td name="scoring" id="scoring">{{ i.scoring }}</td>
+        <td name="num-of-segments" id="num-of-segments">{{ i.num_segs }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% endblock %}

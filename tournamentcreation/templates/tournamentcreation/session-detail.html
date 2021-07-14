@@ -1,0 +1,201 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %} {% static 'css/session-detail.css' %} {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %} Session Detail {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+
+<div class="main-container">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div>
+      <h3>Sessions Detail</h3>
+
+      <div>
+        <label for="tournament-info">for</label>
+        <select name="tournament-info" id="tournament-info">
+          {% for i in tournament_objects %}
+          <option value="{{ i.pk }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <div>
+          <input
+            type="button"
+            name="show-all"
+            id="show-all"
+            value="Show All Sessions"
+          />
+        </div>
+        <div>
+          <input
+            type="button"
+            name="add-new-session"
+            id="add-new-session"
+            value="Add New Session"
+          />
+        </div>
+        <div>
+          <input
+            type="button"
+            name="generate-session-file"
+            id="generate-session-file"
+            value="Generate Session File"
+          />
+        </div>
+      </div>
+
+      <div>
+        <span>Select Session to View/Edit:</span>
+        <select name="session-info" id="session-info">
+          {% for i in session_objects %}
+          <option value="{{ i.pk }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="session-name">Name:</label>
+        <input type="text" name="session-name" id="session-name" />
+      </div>
+      <div>
+        <label for="format">Format:</label>
+        <input type="text" name="format" id="format" />
+      </div>
+      <div>
+        <label for="scoring">Scoring:</label>
+        <input type="text" name="scoring" id="scoring" />
+      </div>
+      <div>
+        <label for="host">Host</label>
+        <input type="text" name="host" id="host" />
+      </div>
+      <div>
+        <label for="num-of-teams">Number of Teams</label>
+        <input type="number" name="num-of-teams" id="num-of-teams" />
+      </div>
+      <div>
+        <label for="num-of-seg">Number of Segments</label>
+        <input type="text" name="num-of-seg" id="num-of-seg" value="1" onkeyup="getSegments(this)"/>
+      </div>
+
+      <div class="additional-info">
+        <div>
+          <input type="checkbox" name="no-invite" id="no-invite" />
+          <label for="no-invite"
+            >noinvite (will seat players without issuing Invitations)</label
+          >
+        </div>
+        <div>
+          <input type="checkbox" name="is-slow" id="is-slow" value="on" />
+          <label for="is-slow"
+            >slow (doubles the default time per board from 10 to 20
+            minutes)</label
+          >
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            name="is-predealt-boards"
+            id="is-predealt-boards"
+            value="on"
+          />
+          <label for="is-predealt-boards">Use Predealt Boards</label>
+        </div>
+        <div>
+          <input type="checkbox" name="is-barometer" id="is-barometer" />
+          <label for="is-barometer">Barometer on</label>
+        </div>
+        <div>
+          <input type="checkbox" value="on" name="is-kibitzers" id="is-kibitzers" />
+          <label for="is-kibitzers">Allow Kibitzers</label>
+        </div>
+        <div>
+          <input type="checkbox" value="on" name="is-undo" id="is-undo" />
+          <label for="is-undo">Allow Undos</label>
+        </div>
+        <div>
+          <input type="checkbox" value="on" name="other-hacks" id="other-hacks" />
+          <label for="other-hacks">Other Hacks</label>
+          <input type="text" name="other-hacks-inp" id="other-hacks-inp" />
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="segment-info" id="segment-info">
+        <!-- <h3>Segment 1</h3>
+        <div>
+          <label for="start-time">Start Time:</label>
+          <input type="text" name="start-time" id="start-time" value="" />
+        </div>
+        <div>
+          <label for="num-of-boards">Number of Boards:</label>
+          <input type="number" name="num-of-boards" id="num-of-boards" />
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            name="is-start-board"
+            id="is-start-board"
+            value=""
+          />
+          <label for="start-board-num">Starting Board Number:</label>
+          <input type="number" name="start-board-num" id="start-board-num" />
+        </div> -->
+      </div>
+
+      <div>
+        <div>
+          <input
+            type="button"
+            name="cancel-btn"
+            id="cancel-btn"
+            value="Cancel"
+          />
+        </div>
+        <div>
+          <input
+            type="submit"
+            name="modify-session"
+            id="modify-session"
+            value="Modify Session"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+{% endblock %}
+{% block extrafooter %}
+    <script>
+      let numberOfSegments = 1;
+
+      const executeSegments = () => {
+        document.getElementById('segment-info').innerHTML = '';
+        for(let i=1; i<=numberOfSegments; i++) {
+          document.getElementById('segment-info').innerHTML += '<h3>Segment '+i+'</h3> <div> <label for="start-time-segment-'+i+'">Start Time:</label> <input type="text" name="start-time-segment-'+i+'" id="start-time-segment-'+i+'" /> </div> <div> <label for="num-of-boards-'+i+'">Number of Boards:</label> <input type="number" name="num-of-boards-'+i+'" id="num-of-boards-'+i+'" /> </div> <div> <input type="checkbox" name="is-start-board-'+i+'" id="is-start-board-'+i+'" value="on" /> <label for="start-board-num-'+i+'">Starting Board Number:</label> <input type="number" name="start-board-num-'+i+'" id="start-board-num-'+i+'" /> </div>'
+        }
+      }
+
+      $(() => {
+        executeSegments();
+      })
+
+      const getSegments = (e) => {
+        if($(e).val() > 0) 
+          numberOfSegments = $(e).val();
+
+        executeSegments();
+      }
+    </script>
+    {% endblock %}
+
+
