@@ -1,0 +1,9 @@
+.main-container {
+    width: 40%;
+    color: white;
+    background-color: #333;
+    padding: 5%;
+    margin: 5% auto;
+    border-radius: 3%;
+    opacity: 0.9;
+}

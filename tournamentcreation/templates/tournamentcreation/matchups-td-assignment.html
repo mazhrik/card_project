@@ -1,0 +1,53 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %} {% static 'css/matchups-td-assignment.css' %} {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %} Table TD Assignment {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+
+<div class="main-container">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div>
+      <h3>Table TD Assignment</h3>
+
+      <div>
+        <label for="tournament-info">for</label>
+        <select name="tournament-info" id="tournament-info">
+          {% for i in tournament_objects %}
+          <option value="{{ i.pk }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <input
+          type="button"
+          name="add-new-td"
+          id="add-new-td"
+          value="Add New TD"
+        />
+      </div>
+      <div>
+        <table>
+          <tr>
+            <th>Match</th>
+            {% for i in td_objects %}
+            <th>{{ i.bbo_username }}</th>
+            {% endfor %}
+          </tr>
+          {% for i in td_objects %}
+          <tr>
+            <td>{{ i }}</td>
+            <!-- <td>{{ j }}</td> -->
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

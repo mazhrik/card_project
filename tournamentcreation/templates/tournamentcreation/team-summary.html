@@ -1,0 +1,83 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %} {% static 'css/team-summary.css' %} {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %} Team Summary {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+<!-- ---------------------------------------------------------------------- -->
+
+<div class="main-container">
+  <h1>Teams Summary</h1>
+
+  <div>
+    <label for="tournament-info">for</label>
+    <select name="tournament-info" id="tournament-info">
+      {% for i in tournament_objects %}
+      <option value="{{ i.pk }}">{{ i }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div>
+    <div>
+      <span>Click on Team number (or name) to edit team details</span>
+    </div>
+    <div>
+      <input type="button" name="show-all" id="show-all" value="Show All" />
+    </div>
+    <div>
+      <input
+        type="button"
+        name="add-new-team"
+        id="add-new-team"
+        value="Add New Team"
+      />
+    </div>
+  </div>
+
+  <div>
+    <table>
+      <tr>
+        <th>Team #</th>
+        <th>is Active</th>
+        <th>Team Name</th>
+        <th>Team Captain</th>
+      </tr>
+      {% for i in team_objects %}
+      <tr name="{{ i.pk }}" id="{{ i.pk }}">
+        <td name="team-no" id="team-no">{{ i.pk }}</td>
+        <td>
+          <input
+            type="checkbox"
+            name="is-active"
+            id="is-active"
+            value="{{ i.is_active }}"
+          />
+        </td>
+        <td name="team-name" id="team-name">{{ i.team_name }}</td>
+        <td name="team-captain" id="team-captain">{{ i.cap_name }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block extrafooter %}
+<script>
+  var i;
+  var list_len = {{ team_objects|length }};
+
+  for(i = 0; i < list_len; i++){
+    if ($('#is-active').val() == 'True'){
+      $('#is-active').attr('checked', 'checked')
+      console.log(i)
+
+    }
+  }
+</script>
+{% endblock %}

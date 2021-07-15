@@ -1,0 +1,56 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %}{% static 'css/matchups.css' %}{% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %} Matchups {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+
+<div class="main-container">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div>
+      <div>
+        <input
+          type="button"
+          name="assign-table-td"
+          id="assign-table-td"
+          value="Assign Table TDs"
+        />
+      </div>
+      <div>
+        <table>
+          <tr>
+            <th>Match</th>
+            <th>Team 1</th>
+            <th>Team 2</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>
+              <select name="team-1" id="team-1">
+                {% for i in team_objects %}
+                <option value="{{ i.pk }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+              <select name="team-2" id="team-2">
+                {% for i in team_objects %}
+                <option value="{{ i.pk }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <input type="submit">
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
