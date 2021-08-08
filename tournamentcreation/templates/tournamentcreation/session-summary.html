@@ -14,6 +14,7 @@
   <div>
     <label for="tournament-info">for</label>
     <select name="tournament-info" id="tournament-info">
+      <option value="select">select</option>
       {% for i in tournament_objects %}
       <option value="{{ i.pk }}">{{ i }}</option>
       {% endfor %}
@@ -24,34 +25,68 @@
     <div>
       <span>Click on Session Name to view/edit session details</span>
     </div>
-    <div>
-      <input
-        type="button"
-        name="add-new-session"
-        id="add-new-teamsession"
-        value="Add New Session"
-      />
-    </div>
+<!--    <div>-->
+<!--      <input-->
+<!--        type="button"-->
+<!--        name="add-new-session"-->
+<!--        id="add-new-teamsession"-->
+<!--        value="Add New Session"-->
+<!--      />-->
+<!--    </div>-->
   </div>
 
   <div>
-    <table>
+    <table id="table_id">
       <tr>
         <th>Session Name</th>
         <th>Format</th>
         <th>Scoring</th>
         <th>Number of Segments</th>
       </tr>
-      {% for i in session_objects %}
-      <tr name="{{ i.pk }}" id="{{ i.pk }}">
+      <tbody id="tableBody">
+      <tr id="table_table">
         <td name="session-name" id="session-name">{{ i.session_name }}</td>
         <td name="format" id="format">{{ i.format }}</td>
         <td name="scoring" id="scoring">{{ i.scoring }}</td>
         <td name="num-of-segments" id="num-of-segments">{{ i.num_segs }}</td>
       </tr>
-      {% endfor %}
+</tbody>
     </table>
   </div>
 </div>
 
 {% endblock %}
+
+{% block extrafooter %}
+    <script>
+
+      $("#tournament-info").change(function () {
+        varname = $("#tournament-info").val();
+        if(varname === "0") {
+          $('#formContainer').find('input:text').val('');
+          $('#formContainer').find('input[type=date]').val('');
+        }
+        else {
+          $.get("/ajax_sessionsummary?id=" + varname, function (data, status) {
+          console.log(data[0])
+          $("#tableBody").empty();
+          let str="";
+          data[0].forEach((item)=>{
+          console.log("item :",item)
+            str +="<tr id='table_table'>"+
+            "<td name='session-name' id='session-name'>"+item.fields.session_name+"</td>"+
+            "<td name='format' id='format'>"+item.fields.format+"</td>"+
+            "<td name='scoring' id='scoring'>"+item.fields.scoring+"</td>" +
+            "<td name='num-of-segments' id='num-of-segments'>"+item.fields.num_segs+"</td>" +
+          "</tr>";
+  })
+
+  $("#tableBody").html(str);
+          });
+        }
+      });
+
+
+    </script>
+    {% endblock %}
+

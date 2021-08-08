@@ -10,102 +10,106 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <div class="main-container">
-  <form action="" method="POST">
+  <form action="" method="POST" id="formContainer">
     {% csrf_token %}
     <div>
-      <div class="team-information">
+      <div class="container">
         <h3>Teams Detail</h3>
 
-        <div>
+        <div id="tournament-infocontainer">
           <label for="tournament-info">for</label>
           <select name="tournament-info" id="tournament-info">
+            <option value="select">select</option>
             {% for i in tournament_objects %}
-            <option value="{{ i.pk }}">{{ i }}</option>
+            <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
           </select>
         </div>
 
         <div>
-          <div>
+          <div id="showallteamcontainer">
             <input
               type="button"
               name="show-all"
               id="show-all"
               value="Show All Teams"
             />
-          </div>
-          <div>
+
             <input
               type="button"
+
               name="add-new-team"
               id="add-new-team"
               value="Add New Team"
+              onClick="addNewTournamentStateHandler()"
             />
           </div>
         </div>
+        <!--          <h3>hello</h3>-->
+        <div id="add_team_objects"></div>
 
-        <div>
-          <span>Select team to veiw/edit:</span>
+        <div id="selectteamcontainer">
+          <!--            <input type="text" name="txt" value="Hello" onchange="myFunction(this.value)">-->
+          <label for="team-info">Select team to veiw/edit:</label>
           <select name="team-info" id="team-info">
-            {% for i in team_objects %}
-            <option value="{{ i.pk }}">{{ i }}</option>
-            {% endfor %}
+            <!--            {% for i in team_objects %}-->
+            <!--              <option value="{{ i.pk }}">{{ i }}</option>-->
+            <!--            {% endfor %}-->
           </select>
         </div>
-
-        <div>
-          <label for="team-number">Team Number</label>
-          <input type="text" name="team-number" id="team-number" required />
-        </div>
-
-        <div>
-          <input type="checkbox" name="is-active" id="is-active" value="on"/>
-          <label for="is-active">Active</label>
-        </div>
-
-        <div>
-          <label for="team-name">Team Name</label>
-          <input type="text" name="team-name" id="team-name" required />
-        </div>
       </div>
-      <div class="team-captain-information">
-        <h3>Captain Information</h3>
-        <div>
-          <label for="team-captain-bbo-id">BBO Username:</label>
-          <input
-            type="text"
-            name="team-captain-bbo-id"
-            id="team-captain-bbo-id"
-            required
-          />
-        </div>
-        <div>
-          <label for="team-captain-name">Full Name:</label>
-          <input
-            type="text"
-            name="team-captain-name"
-            id="team-captain-name"
-            required
-          />
-        </div>
-        <div>
-          <label for="team-captain-email">Email:</label>
-          <input
-            type="text"
-            name="team-captain-email"
-            id="team-captain-email"
-            required
-          />
-        </div>
+      <div>
+        <label for="team-number">Team Number</label>
 
-        <div>
-          <label for="team-captain-phone">Phone:</label>
-          <input
-            type="text"
-            name="team-captain-phone"
-            id="team-captain-phone"
-            required
-          />
+        <input type="text" name="team-number" id="team-number" required />
+
+        <label for="team-name">Team Name</label>
+        <input type="text" name="team-name" id="team-name" required />
+        <input type="checkbox" name="is-active" id="is-active" value="on" />
+        <label for="is-active">Active</label>
+      </div>
+      <div
+        class="global-tds"
+        style="width: 80%; border: 5px solid black; padding: 50px; margin: 20px"
+        id="TDsContainer1"
+      >
+        <div id="captaininfo">
+          <div class="container2">
+            <h3>Captain Information</h3>
+            <div>
+              <label for="team-captain-bbo-id">BBO Username:</label>
+              <input
+                type="text"
+                name="team-captain-bbo-id"
+                id="team-captain-bbo-id"
+                required
+              />
+
+              <label for="team-captain-name">Full Name:</label>
+              <input
+                type="text"
+                name="team-captain-name"
+                id="team-captain-name"
+                required
+              />
+            </div>
+
+            <label for="team-captain-email">Email:</label>
+            <input
+              type="text"
+              name="team-captain-email"
+              id="team-captain-email"
+              required
+            />
+
+            <label for="team-captain-phone">Phone:</label>
+            <input
+              type="text"
+              name="team-captain-phone"
+              id="team-captain-phone"
+              required
+            />
+          </div>
         </div>
         <div>
           <label for="team-captain-country">Country:</label>
@@ -115,8 +119,7 @@
             id="team-captain-country"
             required
           />
-        </div>
-        <div>
+
           <input
             type="checkbox"
             name="is-captain-player"
@@ -127,53 +130,114 @@
           <label for="is-captain-player">Non Playing Team Captain</label>
         </div>
       </div>
-      <div class="players-information">
-        <h3>Additional Team Members</h3>
-        <div id="add-players"></div>
-        <!-- <div>
-          <label for="player-1-bbo-id">BBO Username:</label>
-          <input
-            type="text"
-            name="player-1-bbo-id"
-            id="player-1-bbo-id"
-            required
-          />
+
+      <div
+        class="global-tds"
+        style="width: 80%; border: 5px solid black; padding: 50px; margin: 20px"
+        id="TDsContainer2"
+      >
+        <div class="container3">
+          <h3>Additional Team Members</h3>
+          <div id="add-players"></div>
+           <div id="add-players1"></div>
+          <!-- <div>
+                  <label for="player-1-bbo-id">BBO Username:</label>
+                  <input
+                    type="text"
+                    name="player-1-bbo-id"
+                    id="player-1-bbo-id"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="player-1-name">Full Name:</label>
+                  <input type="text" name="player-1-name" id="player-1-name" required />
+                </div><div>
+                  <label for="player-2-bbo-id">BBO Username:</label>
+                  <input
+                    type="text"
+                    name="player-2-bbo-id"
+                    id="player-2-bbo-id"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="player-2-name">Full Name:</label>
+                  <input type="text" name="player-2-name" id="player-2-name" required />
+                </div>
+                <div>
+                  <label for="player-3-bbo-id">BBO Username:</label>
+                  <input
+                    type="text"
+                    name="player-3-bbo-id"
+                    id="player-3-bbo-id"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="player-3-name">Full Name:</label>
+                  <input type="text" name="player-3-name" id="player-3-name" required />
+                </div> -->
+          <div id="playerbutton">
+            <input
+              type="button"
+              name="add-new-player"
+              id="add-new-player"
+              value="Add Additional Member"
+            />
+          </div>
+          <div id="playerbutton2">
+            <input
+              type="button"
+              name="add-new-player2"
+              id="add-new-player2"
+              value="Add Additional Member"
+            />
+          </div>
         </div>
         <div>
-          <label for="player-1-name">Full Name:</label>
-          <input type="text" name="player-1-name" id="player-1-name" required />
-        </div><div>
-          <label for="player-2-bbo-id">BBO Username:</label>
-          <input
-            type="text"
-            name="player-2-bbo-id"
-            id="player-2-bbo-id"
-            required
-          />
+          <input type="submit" id="button1" class="btn btn-success" name="firstsubmit"  />
         </div>
-        <div>
-          <label for="player-2-name">Full Name:</label>
-          <input type="text" name="player-2-name" id="player-2-name" required />
-        </div>
-        <div>
-          <label for="player-3-bbo-id">BBO Username:</label>
-          <input
-            type="text"
-            name="player-3-bbo-id"
-            id="player-3-bbo-id"
-            required
-          />
-        </div>
-        <div>
-          <label for="player-3-name">Full Name:</label>
-          <input type="text" name="player-3-name" id="player-3-name" required />
-        </div> -->
-        <div>
-          <input type="button" name="add-new-player" id="add-new-player" value="Add Additional Member" onClick="addAdditionalPlayer()">
+         <div>
+          <input type="submit" id="button3" class="btn btn-success" name="button3"  />
         </div>
       </div>
+    </div>
+  </form>
+</div>
+<div class="main-container" id="seatingarrange">
+  <form action="" method="POST" id="formmContainer">
+    {% csrf_token %}
+    <div id="hidd">
       <div>
-        <input type="submit" class="btn btn-success" />
+        <input type="hidden" name="teamphencho" id="teamphencho" value="" />
+        <label for="north">north</label>
+        <select name="north" id="north">
+          <!--            {% for i in tournament_objects %}-->
+          <!--            <option value="{{ i }}">{{ i }}</option>-->
+          <!--            {% endfor %}-->
+        </select>
+        <label for="west">west</label>
+        <select name="west" id="west">
+          <!--            {% for i in tournament_objects %}-->
+          <!--            <option value="{{ i }}">{{ i }}</option>-->
+          <!--            {% endfor %}-->
+        </select>
+        <label for="south">south</label>
+        <select name="south" id="south">
+          <!--            {% for i in tournament_objects %}-->
+          <!--            <option value="{{ i }}">{{ i }}</option>-->
+          <!--            {% endfor %}-->
+        </select>
+        <label for="east">east</label>
+        <select name="east" id="east">
+          <!--            {% for i in tournament_objects %}-->
+          <!--            <option value="{{ i }}">{{ i }}</option>-->
+          <!--            {% endfor %}-->
+        </select>
+      </div>
+      <div>
+        <input type="submit" class="btn btn-success" name="secondsubmit" />
       </div>
     </div>
   </form>
@@ -182,41 +246,236 @@
 <!-- ---------------------------------------------------------------------- -->
 {% block extrafooter %}
 <script>
-  let players_count = 4;
+var limit=4
+var limit2=0
+  let addNewTournamentState = false;
 
-  const additional_players = () => {
-    document.getElementById('add-players').innerHTML = '';
-    for(let i=1; i<=players_count; i++) {
-      document.getElementById('add-players').innerHTML += '<div> <label for="player-'+i+'-bbo-id">BBO Username:</label> <input type="text" name="player-'+i+'-bbo-id" id="player-'+i+'-bbo-id" required /> </div> <div> <label for="player-'+i+'-name">Full Name:</label> <input type="text" name="player-'+i+'-name" id="player-'+i+'-name" required /> </div>'
-    }
+  const resetAllValues = () => {
+    $('#formContainer').find('input:text').val('');
+    $('#formContainer').find('input[type=date]').val('');
   }
 
-  const captainPlaying = () => {
-    if($('#is-captain-player').is(':checked')) {
-      if(players_count > 7 || players_count === 4)
-        players_count -= 1;
-        additional_players();
+  const checkFormState = () => {
+    if(addNewTournamentState) {
+<!--      const username = ('{{ user.username|escapejs }}');-->
+      $('#tournament-infocontainer').hide();
+      $('#add-new-tournament').val('Edit Tournament');
+      $('#showallteamcontainer').hide();
+      $('#selectteamcontainer').hide();
+      $('#seatingarrange').show();
+      $('#modifyContainer').hide();
+      $('#captaininfo').show();
+      $('#add-players').show();
+      $('#button3').show();
+      $('#button1').hide();
+      $('#playerbutton2').show();
+      $('#playerbutton').hide();
+
+
+<!--      $('#format option:eq(0)').prop('selected', true)-->
+<!--      resetAllValues();-->
+<!--      $("#host").val(username)-->
     }
-  } 
+    else {
+     $('#button3').hide();
+     $('#playerbutton').show();
+     $('#playerbutton2').hide();
 
-  const addAdditionalPlayer = () => {
-    if($('#is-captain-player').is(':checked')) {
-      if(players_count > 7)
-        players_count -= 1;
+
     }
-
-    else if(players_count < 8)
-      players_count += 1;
-
-    additional_players();
   }
 
   $(() => {
-    additional_players();
-  })
+    checkFormState();
+  });
 
-  $('#add-new-player').click(function () {
-    
-  })
+  const addNewTournamentStateHandler = () => {
+    addNewTournamentState = !addNewTournamentState;
+    checkFormState();
+  }
+
+<!--  $("#hidd").hide();-->
+<!--  $("#button1").click(()=>{-->
+<!--    $("#hidd").show();-->
+<!--  })-->
+$("#add-new-player2").click(() => {
+console.log('gandu2->',limit2);
+limit2++;
+if(limit2>8){
+return;
+}
+    $("#add-players1").append(
+      '<div> <label for="player-' +
+        limit2 +
+        '-bbo-id">BBO Username:</label> <input type="text" name="player-' +
+        limit2 +
+        '-bbo-id" id="player-' +
+        limit2 +
+        '-bbo-id" required /> <label for="player-' +
+        limit2 +
+        '-name">Full Name:</label> <input type="text" name="player-' +
+        limit2 +
+        '-name" id="player-' +
+        limit2 +
+        '-name" required /> </div>'
+    );
+  });
+$("#add-new-player").click(() => {
+console.log('gandu',limit);
+limit++;
+if(limit>8){
+return;
+}
+    $("#add-players").append(
+      '<div> <label for="player-' +
+        limit +
+        '-bbo-id">BBO Username:</label> <input type="text" name="player-' +
+        limit +
+        '-bbo-id" id="player-' +
+        limit +
+        '-bbo-id" required /> <label for="player-' +
+        limit +
+        '-name">Full Name:</label> <input type="text" name="player-' +
+        limit +
+        '-name" id="player-' +
+        limit +
+        '-name" required /> </div>'
+    );
+  });
+
+  console.log("teri yaad");
+  $("#team-number").change((e) => {
+    console.log("na janne kab se :", e.target.value);
+    $("#teamphencho").val(e.target.value);
+  });
+
+<!--  let players_count = 4;-->
+<!--  const additional_players = () => {-->
+<!--    document.getElementById("add-players1").innerHTML = "";-->
+<!--    for (let i = 1; i <= players_count; i++) {-->
+<!--      document.getElementById("add-players1").innerHTML +=-->
+<!--        '<div> <label for="player-' +-->
+<!--        i +-->
+<!--        '-bbo-id">BBO Username:</label> <input type="text" name="player-' +-->
+<!--        i +-->
+<!--        '-bbo-id" id="player-' +-->
+<!--        i +-->
+<!--        '-bbo-id" required /> <label for="player-' +-->
+<!--        i +-->
+<!--        '-name">Full Name:</label> <input type="text" name="player-' +-->
+<!--        i +-->
+<!--        '-name" id="player-' +-->
+<!--        i +-->
+<!--        '-name" required /> </div>';-->
+<!--    }-->
+<!--  };-->
+
+  $("#tournament-info").change(function () {
+    varname = $("#tournament-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      x = [];
+      $.get("/ajaxcall_team_details?id=" + varname, function (data, status) {
+        variable = '<option value="select">select</option>';
+        console.log(varname);
+
+        console.log(data[0][varname][0]);
+        for (i = 0; i < data[0][varname].length; i++) {
+          variable +=
+            '<option value="' +
+            data[0][varname][i].team_number +
+            '">' +
+            data[0][varname][i].team_number +
+            "</option>";
+        }
+
+        document.getElementById("team-info").innerHTML = variable;
+      });
+    }
+  });
+  const captainPlaying = () => {
+    if ($("#is-captain-player").is(":checked")) {
+    limit2=1
+   }
+  };
+
+  const addAdditionalPlayer = () => {
+    if ($("#is-captain-player").is(":checked")) {
+      if (players_count > 7) players_count -= 1;
+    } else if (players_count < 8) players_count += 1;
+
+    additional_players();
+  };
+
+  $(() => {
+    additional_players();0
+  });
+
+  $("#add-new-player").click(function () {});
+  $("#team-info").change(function () {
+    varname = $("#team-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      $.get("/tournament_ajax?id=" + varname, function (data, status) {
+        document.getElementById("add-players").innerHTML = "";
+    for (let i = 1; i <= Object.keys(data[0][1]).length; i++) {
+      document.getElementById("add-players").innerHTML +=
+        '<div> <label for="player-' +
+        i +
+        '-bbo-id">BBO Username:</label> <input type="text" name="player-' +
+        i +
+        '-bbo-id" id="player-' +
+        i +
+        '-bbo-id" required /> <label for="player-' +
+        i +
+        '-name">Full Name:</label> <input type="text" name="player-' +
+        i +
+        '-name" id="player-' +
+        i +
+        '-name" required /> </div>';
+    }
+
+        console.log('hello gandu',data[0][0]["fields"]["player_5"])
+        $("#teamphencho").val(data[0][0]["fields"]["team_number"]);
+        $("#team-name").val(data[0][0]["fields"]["team_name"]);
+        $("#team-number").val(data[0][0]["fields"]["team_number"]);
+        $("#team-captain-bbo-id").val(data[0][0]["fields"]["cap_name"]);
+        $("#team-captain-name").val(data[0][0]["fields"]["cap_bbo_id"]);
+        $("#team-captain-email").val(data[0][0]["fields"]["cap_email"]);
+        $("#team-captain-phone").val(data[0][0]["fields"]["cap_number"]);
+        $("#team-captain-country").val(data[0][0]["fields"]["cap_country"]);
+        $("#player-1-bbo-id").val(data[0][0]["fields"]["player_1"]);
+        $("#player-1-name").val(data[0][1]["player_1"]);
+        $("#player-2-bbo-id").val(data[0][0]["fields"]["player_2"]);
+        $("#player-2-name").val(data[0][1]["player_2"]);
+        $("#player-3-bbo-id").val(data[0][0]["fields"]["player_3"]);
+        $("#player-3-name").val(data[0][1]["player_3"]);
+        $("#player-4-bbo-id").val(data[0][0]["fields"]["player_4"]);
+        $("#player-4-name").val(data[0][1]["player_4"]);
+        $("#player-5-bbo-id").val(data[0][0]["fields"]["player_5"]);
+        $("#player-5-name").val(data[0][1]["player_5"]);
+        $("#player-6-bbo-id").val(data[0][0]["fields"]["player_6"]);
+        $("#player-6-name").val(data[0][1]["player_6"]);
+        $("#player-7-bbo-id").val(data[0][0]["fields"]["player_7"]);
+        $("#player-7-name").val(data[0][1]["player_7"]);
+        $("#player-8-bbo-id").val(data[0][0]["fields"]["player_8"]);
+        $("#player-8-name").val(data[0][1]["player_8"]);
+        variable = '<option value="select">select</option>';
+        for (const [key, value] of Object.entries(data[0][1])) {
+          console.log("seating", value);
+          variable += '<option value="' + value + '">' + value + "</option>";
+        }
+
+        document.getElementById("north").innerHTML = variable;
+        document.getElementById("west").innerHTML = variable;
+        document.getElementById("east").innerHTML = variable;
+        document.getElementById("south").innerHTML = variable;
+      });
+    }
+  });
 </script>
 {% endblock %}

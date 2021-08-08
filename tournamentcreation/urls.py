@@ -17,9 +17,24 @@ urlpatterns = [
     path('session/detail/', views.session_detail, name='session_detail'),
     path('session/summary/', views.session_summary, name='session_summary'),
     path('matchups/', views.matchups, name='matchups'),
+    path('matches/', views.matches, name='matchess'),
     path('matchups/td-assignment', views.matchups_td_assignment, name='matchups_td_assignment'),
     path('td/', views.td, name='td'),
-    path('td/add/', views.add_td, name='add_td'),
+    path('matchups/td/add/', views.add_td, name='add_td'),
     path('faqs/', views.faqs, name='faqs'),
-    path('single_tournament_ajax/', views.single_tournament_ajax, name='single_tournament_ajax')
+    path('single_tournament_ajax/', views.single_tournament_ajax, name='single_tournament_ajax'),
+    path('tournament_ajax/', views.tournament_ajax, name='tournament_ajax'),
+    path('tournament_ajax3/', views.tournament_ajax3, name='tournament_ajax3'),
+    path('ajaxcall/', views.ajaxcall, name='ajaxcall'),
+    path('ajax_sessionsummary/', views.ajax_sessionsummary, name='ajax_sessionsummary'),
+    path('ajax_session_new/', views.ajax_session_new, name='ajax_session_new'),
+    path('ajaxcall_team_details/', views.ajaxcall_team_details, name='ajaxcall_team_details'),
+    path('ajax_teamsummary/', views.ajax_teamsummary, name='ajax_teamsummary'),
+    path('ajax_call_new/', views.ajax_call_new, name='ajax_call_new'),
+    path('tournament_ajaxajax/', views.tournament_ajaxajax, name='tournament_ajaxajax'),
+    path('matchesajaxcall/', views.matchesajaxcall, name='matchesajaxcall'),
+    path('newajax_sessionsummary/', views.newajax_sessionsummary, name='newajax_sessionsummary'),
+    path('ajax_call_tournament_tomatch/', views.ajax_call_tournament_tomatch, name='ajax_call_tournament_tomatch'),
+    path('ajaxcall_td_function/<int:match>/<str:td>/', views.ajaxcall_td_function, name='ajaxcall_td_function')
 ]
+

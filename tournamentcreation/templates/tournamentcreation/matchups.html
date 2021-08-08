@@ -13,12 +13,25 @@
     {% csrf_token %}
     <div>
       <div>
-        <input
-          type="button"
-          name="assign-table-td"
-          id="assign-table-td"
-          value="Assign Table TDs"
-        />
+        <label for="tournament-info">for</label>
+        <select name="tournament-info" id="tournament-info">
+          <option value="select">select</option>
+          {% for i in tournament_objects %}
+          <option value="{{ i.pk }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label for="match-info">Select segement to veiw/edit:</label>
+        <select name="match-info" id="match-info">
+          <!-- {% for i in team_objects %}
+          <option value="{{ i.pk }}">{{ i }}</option>
+          {% endfor %} -->
+        </select>
+      </div>
+
+      <div>
+         <a href="td/add/" style="color:white"/>Add New TD</a>
       </div>
       <div>
         <table>
@@ -31,26 +44,69 @@
             <td>1</td>
             <td>
               <select name="team-1" id="team-1">
-                {% for i in team_objects %}
-                <option value="{{ i.pk }}">{{ i }}</option>
-                {% endfor %}
+<!--                {% for i in team_objects %}-->
+<!--                <option value="{{ i.pk }}">{{ i }}</option>-->
+<!--                {% endfor %}-->
               </select>
             </td>
             <td>
               <select name="team-2" id="team-2">
-                {% for i in team_objects %}
-                <option value="{{ i.pk }}">{{ i }}</option>
-                {% endfor %}
+<!--                {% for i in team_objects %}-->
+<!--                <option value="{{ i.pk }}">{{ i }}</option>-->
+<!--                {% endfor %}-->
               </select>
             </td>
           </tr>
         </table>
       </div>
       <div>
-        <input type="submit">
+        <input type="submit" />
       </div>
     </div>
   </form>
 </div>
+
+{% endblock %} {% block extrafooter %}
+
+<script>
+  // $("#match-info").change((e) => {
+  //   console.log("na janne kab se :", e.target.value);
+  //   $("#teamphencho").val(e.target.value);
+  // });
+  $("#tournament-info").change(function () {
+    varname = $("#tournament-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      x = [];
+      x = 0;
+      $.get("/ajax_call_new?id=" + varname, function (data, status) {
+        console.log(data);
+        variable = '<option value="select">select</option>';
+        for (i = 0; i < data[0].length; i++) {
+          variable +=
+            '<option value="' + data[0][i] + '">' + data[0][i] + "</option>";
+        }
+        document.getElementById("match-info").innerHTML = variable;
+
+      variable = '<option value="select">select</option>';
+        for (i = 0; i < data[1].length; i++) {
+          variable +=
+            '<option value="' + data[1][i] + '">' + data[1][i] + "</option>";
+        }
+        document.getElementById("team-1").innerHTML = variable;
+
+      variable = '<option value="select">select</option>';
+        for (i = 0; i < data[1].length; i++) {
+          variable +=
+            '<option value="' + data[1][i] + '">' + data[1][i] + "</option>";
+        }
+        document.getElementById("team-2").innerHTML = variable;
+      });
+
+    }
+  });
+</script>
 
 {% endblock %}

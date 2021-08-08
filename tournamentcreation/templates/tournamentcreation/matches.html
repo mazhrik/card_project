@@ -1,0 +1,271 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %} {% static 'css/team-detail.css' %} {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %} Team Detail {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+<!-- ---------------------------------------------------------------------- -->
+
+<div class="main-container">
+  <form action="" method="POST" id="formContainer">
+    {% csrf_token %}
+    <div>
+      <div class="container">
+        <h3>Teams Detail</h3>
+
+        <div>
+          <label for="tournament-info">for</label>
+          <select name="tournament-info" id="tournament-info">
+            {% for i in tournament_objects %}
+            <option value="{{ i.pk }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <div>
+            <input
+              type="button"
+              name="show-all"
+              id="show-all"
+              value="Show All Teams"
+            />
+
+            <input
+              type="button"
+              name="add-new-team"
+              id="add-new-team"
+              value="Add New Team"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="team-info">Select team to veiw/edit:</label>
+          <select name="team-info" id="team-info">
+            {% for i in team_objects %}
+            <option value="{{ i.pk }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div>
+        <label for="team-number">Team Number</label>
+
+        <input type="text" name="team-number" id="team-number" required />
+
+        <label for="team-name">Team Name</label>
+        <input type="text" name="team-name" id="team-name" required />
+        <input type="checkbox" name="is-active" id="is-active" value="on" />
+        <label for="is-active">Active</label>
+      </div>
+      <div
+        class="global-tds"
+        style="width: 80%; border: 5px solid black; padding: 50px; margin: 20px"
+        id="TDsContainer1"
+      >
+        <div>
+          <div class="container2">
+            <h3>Captain Information</h3>
+            <div>
+              <label for="team-captain-bbo-id">BBO Username:</label>
+              <input
+                type="text"
+                name="team-captain-bbo-id"
+                id="team-captain-bbo-id"
+                required
+              />
+
+              <label for="team-captain-name">Full Name:</label>
+              <input
+                type="text"
+                name="team-captain-name"
+                id="team-captain-name"
+                required
+              />
+            </div>
+
+            <label for="team-captain-email">Email:</label>
+            <input
+              type="text"
+              name="team-captain-email"
+              id="team-captain-email"
+              required
+            />
+
+            <label for="team-captain-phone">Phone:</label>
+            <input
+              type="text"
+              name="team-captain-phone"
+              id="team-captain-phone"
+              required
+            />
+          </div>
+        </div>
+        <div>
+          <label for="team-captain-country">Country:</label>
+          <input
+            type="text"
+            name="team-captain-country"
+            id="team-captain-country"
+            required
+          />
+
+          <input
+            type="checkbox"
+            name="is-captain-player"
+            id="is-captain-player"
+            onclick="captainPlaying()"
+            value="on"
+          />
+          <label for="is-captain-player">Non Playing Team Captain</label>
+        </div>
+      </div>
+
+      <div
+        class="global-tds"
+        style="width: 80%; border: 5px solid black; padding: 50px; margin: 20px"
+        id="TDsContainer2"
+      >
+        <div class="container3">
+          <h3>Additional Team Members</h3>
+          <div id="add-players"></div>
+          <!-- <div>
+                  <label for="player-1-bbo-id">BBO Username:</label>
+                  <input
+                    type="text"
+                    name="player-1-bbo-id"
+                    id="player-1-bbo-id"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="player-1-name">Full Name:</label>
+                  <input type="text" name="player-1-name" id="player-1-name" required />
+                </div><div>
+                  <label for="player-2-bbo-id">BBO Username:</label>
+                  <input
+                    type="text"
+                    name="player-2-bbo-id"
+                    id="player-2-bbo-id"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="player-2-name">Full Name:</label>
+                  <input type="text" name="player-2-name" id="player-2-name" required />
+                </div>
+                <div>
+                  <label for="player-3-bbo-id">BBO Username:</label>
+                  <input
+                    type="text"
+                    name="player-3-bbo-id"
+                    id="player-3-bbo-id"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="player-3-name">Full Name:</label>
+                  <input type="text" name="player-3-name" id="player-3-name" required />
+                </div> -->
+          <div>
+            <input
+              type="button"
+              name="add-new-player"
+              id="add-new-player"
+              value="Add Additional Member"
+              onClick="addAdditionalPlayer()"
+            />
+          </div>
+        </div>
+        <div>
+          <input type="submit" class="btn btn-success" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block extrafooter %}
+<script>
+  let players_count = 4;
+
+  const additional_players = () => {
+    document.getElementById("add-players").innerHTML = "";
+    for (let i = 1; i <= players_count; i++) {
+      document.getElementById("add-players").innerHTML +=
+        '<div> <label for="player-' +
+        i +
+        '-bbo-id">BBO Username:</label> <input type="text" name="player-' +
+        i +
+        '-bbo-id" id="player-' +
+        i +
+        '-bbo-id" required /> <label for="player-' +
+        i +
+        '-name">Full Name:</label> <input type="text" name="player-' +
+        i +
+        '-name" id="player-' +
+        i +
+        '-name" required /> </div>';
+    }
+  };
+
+  const captainPlaying = () => {
+    if ($("#is-captain-player").is(":checked")) {
+      if (players_count > 7 || players_count === 4) players_count -= 1;
+      additional_players();
+    }
+  };
+
+  const addAdditionalPlayer = () => {
+    if ($("#is-captain-player").is(":checked")) {
+      if (players_count > 7) players_count -= 1;
+    } else if (players_count < 8) players_count += 1;
+
+    additional_players();
+  };
+
+  $(() => {
+    additional_players();
+  });
+
+  $("#add-new-player").click(function () {});
+  $("#team-info").change(function () {
+    varname = $("#team-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      $.get("/tournament_ajax?id=" + varname, function (data, status) {
+        $("#team-number").val(data[0][0]["fields"]["team_name"]);
+        $("#team-name").val(data[0][0]["fields"]["team_number"]);
+        $("#team-captain-bbo-id").val(data[0][0]["fields"]["cap_number"]);
+        $("#team-captain-name").val(data[0][0]["fields"]["cap_name"]);
+        $("#team-captain-email").val(data[0][0]["fields"]["cap_email"]);
+        $("#team-captain-phone").val(data[0][0]["fields"]["cap_number"]);
+        $("#team-captain-country").val(data[0][0]["fields"]["cap_country"]);
+        $("#player-1-bbo-id").val(data[0][0]["fields"]["player_1"]);
+        $("#player-1-name").val(data[0][1]["player_1"]);
+        $("#player-2-bbo-id").val(data[0][0]["fields"]["player_2"]);
+        $("#player-2-name").val(data[0][1]["player_2"]);
+        $("#player-3-bbo-id").val(data[0][0]["fields"]["player_3"]);
+        $("#player-3-name").val(data[0][1]["player_3"]);
+        $("#player-4-bbo-id").val(data[0][0]["fields"]["player_4"]);
+        $("#player-4-name").val(data[0][1]["player_4"]);
+        $("#player-5-bbo-id").val(data[0][0]["fields"]["player_5"]);
+        $("#player-5-name").val(data[0][1]["player_5"]);
+        $("#player-6-bbo-id").val(data[0][0]["fields"]["player_6"]);
+        $("#player-6-name").val(data[0][1]["player_6"]);
+        $("#player-7-bbo-id").val(data[0][0]["fields"]["player_7"]);
+        $("#player-7-name").val(data[0][1]["player_7"]);
+        $("#player-8-bbo-id").val(data[0][0]["fields"]["player_8"]);
+        $("#player-8-name").val(data[0][1]["player_8"]);
+      });
+    }
+  });
+</script>
+{% endblock %}

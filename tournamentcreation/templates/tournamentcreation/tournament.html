@@ -1,145 +1,149 @@
-{% extends 'tournamentcreation/base.html' %} {% block content %} 
+{% extends 'tournamentcreation/base.html' %} {% block content %}
 {% block title%} abcd {% endblock %}
 
 <div style="margin-left: 320px">
-  <form action="" method="POST" id="formContainer">
-    {% csrf_token %}
-    <div style="color: wheat; padding: 3%; width: 70%">
-      <div
-        style="
+    <form action="" method="POST" id="formContainer">
+        {% csrf_token %}
+        <div style="color: wheat; padding: 3%; width: 70%">
+            <div
+                    style="
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           margin: 1%;
         "
-      >
-        <div id="tournamentDropdownContainer">
-          <label for="current-focus">Select Tournament to view/edit: </label>
-          <select name="current-focus" id="current-focus">
-            <option value="0">None</option>
-            {% for i in tournament_objects %}
-            <option value="{{ i.pk }}">{{ i.title }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div>
-          <input
-            type="button"
-            class="add-new-tournament"
-            id="add-new-tournament"
-            value="Add New Tournament"
-            onClick="addNewTournamentStateHandler()"
-          />
-        </div>
-      </div>
-      <div id="inactiveTournamentContainer">
-        <input
-          type="checkbox"
-          name="inactive-tournaments"
-          id="inactive-tournaments"
-          value=""
-        />
-        <label for="inactive-tournaments">Include Inactive Tournaments</label>
-      </div>
-      <div
-        style="
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin: 1%;
-        "
-      >
-        <div>
-          <label for="title">Name:</label>
-          <input type="text" name="title" id="title" />
-        </div>
-        <div>
-          <input type="checkbox" name="is-active" id="is-active" value="on" />
-          <label for="is-active">Active</label>
-        </div>
-        <div>
-          <label for="format">Format:</label>
-          <select name="format" id="format">
-            <!-- <option value="">None</option> -->
-            <option value="Knockout">Knockout</option>
-            <option value="Mixed">Mixed</option>
-            <option value="Round Robin">Round Robin</option>
-            <option value="Swiss">Swiss</option>
-          </select>
-          <!-- e="format" id="format">
-            <option value="">None</option>
-            {% for i in format %}
-            <option value="{{ i }}">{{ i }}</option>
-            {% endfor %}
-          </select> -->
-        </div>
-      </div>
-      <div
-        style="
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin: 1%;
-        "
-      >
-        <div>
-          <label for="host">Host:</label>
-          <input type="text" name="host" id="host" />
-        </div>
-        <div>
-          <label for="start-date">Start Date:</label>
-          <input type="date" name="start-date" id="start-date" />
-        </div>
-        <div>
-          <label for="end-date">End Date:</label>
-          <input type="date" name="end-date" id="end-date" />
-        </div>
-      </div>
-      <div
-        class="global-tds"
-        style="width: 80%; border: 5px solid black; padding: 50px; margin: 20px"
-        id="TDsContainer"
-      >
-        <div>
-          <div>
-            <label for="global-tds">Global TDs:</label>
-            <span>Click to assign as Global TD</span>
-            <div>
-              <a href="/td/add">
-              <input type="button" value="Add New TD"/>
-            </a>
+            >
+                <div id="tournamentDropdownContainer">
+                    <label for="current-focus">Select Tournament to view/edit: </label>
+                    <select name="current-focus" id="current-focus">
+                        <option value="0">None</option>
+                        {% for i in tournament_objects %}
+                        <option value="{{ i.pk }}">{{ i.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <input
+                            type="button"
+                            class="add-new-tournament"
+                            id="add-new-tournament"
+                            value="Add New Tournament"
+                            onClick="addNewTournamentStateHandler()"
+                    />
+                </div>
             </div>
-          </div>
-          <div id="TDContainer">
-            <!-- {% for i in td %} -->
-            <!-- <input type="checkbox" name="{{ i.pk }}" id="{{ i.pk }}" /> -->
-            <!-- <label for="{{ i.pk }}">{{ i.pk }} ({{ i }})</label> -->
-            <!-- {% endfor %} -->
-          </div>
-        </div>
-      </div>
+            <div id="inactiveTournamentContainer">
+                <input
+                        type="checkbox"
+                        name="inactive-tournaments"
+                        id="inactive-tournaments"
+                        value=""
+                />
+                <label for="inactive-tournaments">Include Inactive Tournaments</label>
+            </div>
+            <div
+                    style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin: 1%;
+        "
+            >
+                <div>
+                    <label for="title">Name:</label>
+                    <input type="text" name="title" id="title"/>
+                </div>
+                <div>
+                    <input type="checkbox" name="is-active" id="is-active" value="on"/>
+                    <label for="is-active">Active</label>
+                </div>
+                <div>
+                    <label for="format">Format:</label>
+                    <select name="format" id="format">
+                        <!-- <option value="">None</option> -->
+                        <option value="Knockout">Knockout</option>
+                        <option value="Mixed">Mixed</option>
+                        <option value="Round Robin">Round Robin</option>
+                        <option value="Swiss">Swiss</option>
+                    </select>
+                    <!-- e="format" id="format">
+                      <option value="">None</option>
+                      {% for i in format %}
+                      <option value="{{ i }}">{{ i }}</option>
+                      {% endfor %}
+                    </select> -->
+                </div>
+            </div>
+            <div
+                    style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin: 1%;
+        "
+            >
+                <div>
+                    <label for="host">Host:</label>
+                    <input type="text" name="host" id="host"/>
+                </div>
+                <div>
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" name="start-date" id="start-date"/>
+                </div>
+                <div>
+                    <label for="end-date">End Date:</label>
+                    <input type="date" name="end-date" id="end-date"/>
+                </div>
+            </div>
+            <div
+                    class="global-tds"
+                    style="width: 80%; border: 5px solid black; padding: 50px; margin: 20px"
+                    id="TDsContainer"
+            >
+                <div>
+                    <div>
+                        <label>Global TDs: Click to assign as Global TD  </label>
 
-      <div id="submitContainer">
-        <input type="submit" name="add-tournament" id="add-tournament"/>
-      </div>
-      <div id="modifyContainer">
-        <input
-          type="submit"
-          name="modify-tournament"
-          id="modify-tournament"
-          value="Modify Tournament"
-        />
-      </div>
-      <div>
-        <input 
-        type="submit"
-        name="logout" 
-        id="logout"
-        value="Logout" 
-        />
-      </div>
-    </div>
-  </form>
+
+                        <a href="/td/add"
+                        >
+                            <input type="button" value="Add New TD"/>
+                        </a>
+
+                    </div>
+                    <div id="TDContainer">
+                        <!-- {% for i in td %} -->
+                        <!-- <input type="checkbox" name="{{ i.pk }}" id="{{ i.pk }}" /> -->
+                        <!-- <label for="{{ i.pk }}">{{ i.pk }} ({{ i }})</label> -->
+                        <!-- {% endfor %} -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="submitContainer">
+                <input type="submit" name="add-tournament" id="add-tournament"/>
+            </div>
+
+            <div>
+                <input
+                        type="submit"
+                        name="logout"
+                        id="logout"
+                        value="Logout"
+                        style="float: left;"
+                />
+            </div>
+            <div id="modifyContainer">
+                <input
+                        type="submit"
+                        name="modify-tournament"
+                        id="modify-tournament"
+                        value="Modify Tournament"
+                        style="float: left;"
+                />
+            </div>
+        </div>
+    </form>
 </div>
 
 {% endblock %} {% block extrafooter %}
@@ -208,5 +212,9 @@
       });
     }
   });
+
+
+
+
 </script>
 {% endblock %}

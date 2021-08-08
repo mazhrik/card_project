@@ -1,9 +1,10 @@
-{% load static %}
+
 <!-- ---------------------------------------------------------------------- -->
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% load static %}
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +14,9 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="{% static 'css/team-detail.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+
     <link rel="stylesheet" href="{% block link %} {% endblock %}">
     <title>{% block title %} {% endblock %}</title>
   </head>
@@ -21,6 +24,13 @@
     {% include 'tournamentcreation/sidebar.html' %}
 
     <div style="margin-top: 5%; background-color: blueviolet;"></div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class=" alert {{ message.tags }} m-2 " id='msg' color="white" role='alert'> {{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     {% block content %} 
     

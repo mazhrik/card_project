@@ -1,9 +1,9 @@
-{% load static %}
-<!-- ---------------------------------------------------------------------- -->
 
+<!-- ---------------------------------------------------------------------- -->
 <!DOCTYPE html>
 <html>
   <head>
+    {% load static %}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
     <link
@@ -36,14 +36,14 @@
           <a href="/matchups">Matchups</a>
           <a href="/matchups/td-assignment">Table TD Assignment</a>
         </div>
-        <a href="#">Matches</a>
+        <a href="/matches">Matches</a>
         <button class="dropdown-btn">
           TDs
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-container">
           <a href="/td">TDs</a>
-          <a href="/td/add">Add TD</a>
+          <a href="/matchups/td/add/">Add TD</a>
         </div>
         <a href="/faqs">FAQs</a>
       </div>
