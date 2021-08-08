@@ -1,0 +1,309 @@
+{% extends 'tournamentcreation/base.html' %}
+<!-- ---------------------------------------------------------------------- -->
+{% load static %}
+<!-- ---------------------------------------------------------------------- -->
+{% block link %} {% static 'css/team-detail.css' %} {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block title %} Team Detail {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block content %}
+<!-- ---------------------------------------------------------------------- -->
+
+<div class="main-container">
+  <form action="" method="POST" id="formContainer">
+    {% csrf_token %}
+    <div>
+      <div class="container">
+        <h3>Matches</h3>
+
+        <div>
+          <label for="tournament-info">for</label>
+          <select name="tournament-info" id="tournament-info">
+            <option value="select">select</option>
+            {% for i in tournament_objects %}
+            <option value="{{ i.pk }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!--        <div>-->
+        <!--          <div>-->
+        <!--            <input-->
+        <!--              type="button"-->
+        <!--              name="show-all"-->
+        <!--              id="show-all"-->
+        <!--              value="Show All Teams"-->
+        <!--            />-->
+
+        <!--            <input-->
+        <!--              type="button"-->
+        <!--              name="add-new-team"-->
+        <!--              id="add-new-team"-->
+        <!--              value="Add New Team"-->
+        <!--            />-->
+        <!--          </div>-->
+        <!--        </div>-->
+
+        <div>
+          <label for="match-info">Select segment to veiw:</label>
+          <select name="match-info" id="match-info">
+            <!--            {% for i in match_objects %}-->
+            <!--            <option value="{{ i.pk }}">{{ i.pk }}</option>-->
+            <!--            {% endfor %}-->
+          </select>
+        </div>
+      </div>
+
+      <!--        <div>-->
+      <!--          <label for="team-name">Team Name</label>-->
+      <!--          <input type="text" name="team-name" id="team-name" required />-->
+      <!--          <input type="checkbox" name="is-active" id="is-active" value="on"/>-->
+      <!--          <label for="is-active">Active</label>-->
+
+      <!--        </div>-->
+      <!--        <div class="global-tds" style="width: 80%; border: 5px solid black; padding: 50px; margin: 20px" id="TDsContainer1">-->
+      <!--            <div>-->
+      <!--                <div class="container2">-->
+      <!--                    <h3>Captain Information</h3>-->
+      <!--                    <div>-->
+      <!--                      <label for="team-captain-bbo-id">BBO Username:</label>-->
+      <!--                      <input-->
+      <!--                        type="text"-->
+      <!--                        name="team-captain-bbo-id"-->
+      <!--                        id="team-captain-bbo-id"-->
+      <!--                        required-->
+      <!--                      />-->
+
+      <!--                      <label for="team-captain-name">Full Name:</label>-->
+      <!--                      <input-->
+      <!--                        type="text"-->
+      <!--                        name="team-captain-name"-->
+      <!--                        id="team-captain-name"-->
+      <!--                        required-->
+      <!--                      />-->
+      <!--                    </div>-->
+
+      <!--                  <label for="team-captain-email">Email:</label>-->
+      <!--                  <input-->
+      <!--                    type="text"-->
+      <!--                    name="team-captain-email"-->
+      <!--                    id="team-captain-email"-->
+      <!--                    required-->
+      <!--                  />-->
+
+      <!--                  <label for="team-captain-phone">Phone:</label>-->
+      <!--                  <input-->
+      <!--                    type="text"-->
+      <!--                    name="team-captain-phone"-->
+      <!--                    id="team-captain-phone"-->
+      <!--                    required-->
+      <!--                  />-->
+      <!--                </div>-->
+      <!--            </div>-->
+      <!--            <div>-->
+      <!--              <label for="team-captain-country">Country:</label>-->
+      <!--              <input-->
+      <!--                type="text"-->
+      <!--                name="team-captain-country"-->
+      <!--                id="team-captain-country"-->
+      <!--                required-->
+      <!--              />-->
+
+      <!--              <input-->
+      <!--                type="checkbox"-->
+      <!--                name="is-captain-player"-->
+      <!--                id="is-captain-player"-->
+      <!--                onclick="captainPlaying()"-->
+      <!--                value="on"-->
+      <!--              />-->
+      <!--              <label for="is-captain-player">Non Playing Team Captain</label>-->
+      <!--            </div>-->
+      <!--        </div>-->
+
+      <!--         <div class="global-tds" style="width: 80%; border: 5px solid black; padding: 50px; margin: 20px" id="TDsContainer2">-->
+      <!--              <div class="container3">-->
+
+      <!--                <h3>Additional Team Members</h3>-->
+      <!--                <div id="add-players"></div>-->
+      <!--                &lt;!&ndash; <div>-->
+      <!--                  <label for="player-1-bbo-id">BBO Username:</label>-->
+      <!--                  <input-->
+      <!--                    type="text"-->
+      <!--                    name="player-1-bbo-id"-->
+      <!--                    id="player-1-bbo-id"-->
+      <!--                    required-->
+      <!--                  />-->
+      <!--                </div>-->
+      <!--                <div>-->
+      <!--                  <label for="player-1-name">Full Name:</label>-->
+      <!--                  <input type="text" name="player-1-name" id="player-1-name" required />-->
+      <!--                </div><div>-->
+      <!--                  <label for="player-2-bbo-id">BBO Username:</label>-->
+      <!--                  <input-->
+      <!--                    type="text"-->
+      <!--                    name="player-2-bbo-id"-->
+      <!--                    id="player-2-bbo-id"-->
+      <!--                    required-->
+      <!--                  />-->
+      <!--                </div>-->
+      <!--                <div>-->
+      <!--                  <label for="player-2-name">Full Name:</label>-->
+      <!--                  <input type="text" name="player-2-name" id="player-2-name" required />-->
+      <!--                </div>-->
+      <!--                <div>-->
+      <!--                  <label for="player-3-bbo-id">BBO Username:</label>-->
+      <!--                  <input-->
+      <!--                    type="text"-->
+      <!--                    name="player-3-bbo-id"-->
+      <!--                    id="player-3-bbo-id"-->
+      <!--                    required-->
+      <!--                  />-->
+      <!--                </div>-->
+      <!--                <div>-->
+      <!--                  <label for="player-3-name">Full Name:</label>-->
+      <!--                  <input type="text" name="player-3-name" id="player-3-name" required />-->
+      <!--                </div> &ndash;&gt;-->
+      <!--                <div>-->
+      <!--                  <input type="button" name="add-new-player" id="add-new-player" value="Add Additional Member" onClick="addAdditionalPlayer()">-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--                  <div>-->
+      <!--                    <input type="submit" class="btn btn-success" />-->
+      <!--                  </div>-->
+      <!--         </div>-->
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <div
+      style="
+        height: 700px;
+        border-left: 6px #211a1a solid;
+        right: 500px;
+        position: absolute;
+      "
+    ></div>
+    <div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="secondnorth">north</label>
+        <input type="text" name="north" id="secondnorth" required />
+        <div>
+          <label for="secondwest">west</label>
+          <input type="text" name="west" id="secondwest" required />
+          <label for="secondsouth">south</label>
+          <input type="text" name="south" id="secondsouth" required />
+        </div>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="secondeast">east</label>
+        <input type="text" name="east" id="secondeast" required />
+      </div>
+    </div>
+    <div style="display: inline-block; margin-left: 530px; margin-top: -900px">
+      ;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label for="thirdnorth">north</label>
+      <input type="text" name="north" id="thirdnorth" required />
+      <div>
+        <label for="thirdwest">west</label>
+        <input type="text" name="west" id="thirdwest" required />
+        <label for="thirdsouth">south</label>
+        <input type="text" name="south" id="thirdsouth" required />
+      </div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label for="thirdeast">east</label>
+      <input type="text" name="east" id="thirdeast" required />
+    </div>
+    <hr color="black" style="width: 100%; margin-top: 7rem" />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--    <div>-->
+<!--      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--      <label for="north">north</label>-->
+<!--      <input type="text" name="north" id="north" required />-->
+<!--      <div>-->
+<!--        <label for="west">west</label>-->
+<!--        <input type="text" name="west" id="west" required />-->
+<!--        <label for="south">south</label>-->
+<!--        <input type="text" name="south" id="south" required />-->
+<!--      </div>-->
+<!--      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--      <label for="east">east</label>-->
+<!--      <input type="text" name="east" id="east" required />-->
+<!--      <div-->
+<!--        style="margin-left: 500px; display: inline-block; margin-top: -190px"-->
+<!--      >-->
+<!--        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--        <label for="fourthnorth">north</label>-->
+
+<!--        <input type="text" name="north" id="fourthnorth" required />-->
+<!--        <div>-->
+<!--          <label for="fourthwest">west</label>-->
+<!--          <input type="text" name="west" id="fourthwest" required />-->
+<!--          <label for="fourthsouth">south</label>-->
+<!--          <input type="text" name="south" id="fourthsouth" required />-->
+<!--        </div>-->
+<!--        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--        <label for="fourtheast">east</label>-->
+<!--        <input type="text" name="east" id="fourtheast" required />-->
+<!--      </div>-->
+    </div>
+  </form>
+</div>
+
+{% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block extrafooter %}
+<script>
+  $("#tournament-info").change(function () {
+    varname = $("#tournament-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      x = [];
+      x = 0;
+      $.get("/ajax_call_new?id=" + varname, function (data, status) {
+        variable = '<option value="select">select</option>';
+        for (i = 0; i < data[0].length; i++){
+          x[i] = data[0][i];
+          variable +=
+            '<option value="' + data[0][i] + '">' + data[0][i] + "</option>";
+        }
+        document.getElementById("match-info").innerHTML = variable;
+      });
+    }
+  });
+
+  $("#match-info").change(function () {
+    varname = $("#match-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      $.get("/matchesajaxcall?id=" + varname, function (data, status) {
+        for (i = 0; i < 3; i++) {
+          $("#secondnorth").val(data[i]["t1north"]);
+          $("#secondsouth").val(data[i]["t1south"]);
+          $("#secondeast").val(data[i]["t1east"]);
+          $("#secondwest").val(data[i]["t1west"]);
+          $("#thirdnorth").val(data[i]["t2north"]);
+          $("#thirdsouth").val(data[i]["t2south"]);
+          $("#thirdeast").val(data[i]["t2east"]);
+          $("#thirdwest").val(data[i]["t2west"]);
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

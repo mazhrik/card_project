@@ -14,76 +14,81 @@
     <div>
       <h3>Sessions Detail</h3>
 
-      <div>
-        <label for="tournament-info">for</label>
-        <select name="tournament-info" id="tournament-info">
-          {% for i in tournament_objects %}
-          <option value="{{ i.pk }}">{{ i }}</option>
-          {% endfor %}
-        </select>
-      </div>
+      <div id="chupao">
+        <div class="containersessiondetails">
+          <label for="tournament-info">for</label>
+          <select name="tournament-info" id="tournament-info">
+            <option value="select">select</option>
+            {% for i in tournament_objects %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
 
-      <div>
-        <div>
-          <input
-            type="button"
-            name="show-all"
-            id="show-all"
-            value="Show All Sessions"
-          />
-        </div>
-        <div>
-          <input
-            type="button"
-            name="add-new-session"
-            id="add-new-session"
-            value="Add New Session"
-          />
-        </div>
-        <div>
-          <input
-            type="button"
-            name="generate-session-file"
-            id="generate-session-file"
-            value="Generate Session File"
-          />
+        <div class="containersessiondetails">
+          <div>
+<!--            <input-->
+<!--              type="button"-->
+<!--              name="show-all"-->
+<!--              id="show-all"-->
+<!--              value="Show All Sessions"-->
+<!--            />-->
+            &nbsp;&nbsp;
+
+            <input
+              type="button"
+              name="add-new-session"
+              id="add-new-session"
+              value="Add New Session"
+              onClick="addNewTournamentStateHandler()"
+            />
+            &nbsp;&nbsp;
+            <input
+              type="button"
+              name="generate-session-file"
+              id="generate-session-file"
+              value="Generate Session File"
+            />
+          </div>
         </div>
       </div>
-
-      <div>
+      <div id="sessionkocupao">
         <span>Select Session to View/Edit:</span>
         <select name="session-info" id="session-info">
-          {% for i in session_objects %}
-          <option value="{{ i.pk }}">{{ i }}</option>
-          {% endfor %}
+          <!--          {% for i in session_objects %}-->
+          <!--          <option value="{{ i.pk }}">{{ i }}</option>-->
+          <!--          {% endfor %}-->
         </select>
       </div>
-
+      &nbsp; &nbsp;
       <div>
         <label for="session-name">Name:</label>
         <input type="text" name="session-name" id="session-name" />
-      </div>
-      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
         <label for="format">Format:</label>
         <input type="text" name="format" id="format" />
-      </div>
-      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <label for="scoring">Scoring:</label>
         <input type="text" name="scoring" id="scoring" />
       </div>
       <div>
         <label for="host">Host</label>
         <input type="text" name="host" id="host" />
-      </div>
-      <div>
+        &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
         <label for="num-of-teams">Number of Teams</label>
         <input type="number" name="num-of-teams" id="num-of-teams" />
-      </div>
-      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <label for="num-of-seg">Number of Segments</label>
-        <input type="text" name="num-of-seg" id="num-of-seg" value="1" onkeyup="getSegments(this)"/>
+        <input
+          type="text"
+          name="num-of-seg"
+          id="num-of-seg"
+          value="1"
+          onkeyup="getSegments(this)"
+        />
       </div>
-
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <div class="additional-info">
         <div>
           <input type="checkbox" name="no-invite" id="no-invite" />
@@ -112,7 +117,12 @@
           <label for="is-barometer">Barometer on</label>
         </div>
         <div>
-          <input type="checkbox" value="on" name="is-kibitzers" id="is-kibitzers" />
+          <input
+            type="checkbox"
+            value="on"
+            name="is-kibitzers"
+            id="is-kibitzers"
+          />
           <label for="is-kibitzers">Allow Kibitzers</label>
         </div>
         <div>
@@ -120,7 +130,12 @@
           <label for="is-undo">Allow Undos</label>
         </div>
         <div>
-          <input type="checkbox" value="on" name="other-hacks" id="other-hacks" />
+          <input
+            type="checkbox"
+            value="on"
+            name="other-hacks"
+            id="other-hacks"
+          />
           <label for="other-hacks">Other Hacks</label>
           <input type="text" name="other-hacks-inp" id="other-hacks-inp" />
         </div>
@@ -149,22 +164,28 @@
           <input type="number" name="start-board-num" id="start-board-num" />
         </div> -->
       </div>
-
+      &nbsp;&nbsp;&nbsp;&nbsp;
       <div>
         <div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input
             type="button"
             name="cancel-btn"
             id="cancel-btn"
             value="Cancel"
           />
-        </div>
-        <div>
+          &nbsp;
           <input
             type="submit"
             name="modify-session"
             id="modify-session"
             value="Modify Session"
+          />
+           <input
+            type="submit"
+            name="submitbutton"
+            id="submitbutton"
+            value="submitbutton"
           />
         </div>
       </div>
@@ -172,30 +193,214 @@
   </form>
 </div>
 
+{% endblock %} {% block extrafooter %}
+<script>
+  let addNewTournamentState = false;
 
-{% endblock %}
-{% block extrafooter %}
-    <script>
-      let numberOfSegments = 1;
+  const resetAllValues = () => {
+    $('#formContainer').find('input:text').val('');
+    $('#formContainer').find('input[type=date]').val('');
+  }
 
-      const executeSegments = () => {
-        document.getElementById('segment-info').innerHTML = '';
-        for(let i=1; i<=numberOfSegments; i++) {
-          document.getElementById('segment-info').innerHTML += '<h3>Segment '+i+'</h3> <div> <label for="start-time-segment-'+i+'">Start Time:</label> <input type="text" name="start-time-segment-'+i+'" id="start-time-segment-'+i+'" /> </div> <div> <label for="num-of-boards-'+i+'">Number of Boards:</label> <input type="number" name="num-of-boards-'+i+'" id="num-of-boards-'+i+'" /> </div> <div> <input type="checkbox" name="is-start-board-'+i+'" id="is-start-board-'+i+'" value="on" /> <label for="start-board-num-'+i+'">Starting Board Number:</label> <input type="number" name="start-board-num-'+i+'" id="start-board-num-'+i+'" /> </div>'
+  const checkFormState = () => {
+    if(addNewTournamentState) {
+    console.log("heloo")
+<!--      const username = ('{{ user.username|escapejs }}');-->
+      $('#tournament-infocontainer').hide();
+      $('#add-new-tournament').val('Edit Tournament');
+      $('#showallteamcontainer').hide();
+      $('#selectteamcontainer').hide();
+      $('#seatingarrange').show();
+      $('#modifyContainer').hide();
+<!--      $('#captaininfo').show();-->
+<!--      $('#add-players').show();-->
+<!--      $('#button3').show();-->
+<!--      $('#button1').hide();-->
+<!--      $('#playerbutton2').show();-->
+<!--      $('#playerbutton').hide();-->
+          $('#chupao').hide();
+          $('#sessionkocupao').hide();
+           $('#submitbutton').show();
+           $('#modify-session').hide();
+
+
+    }
+    else {
+
+
+     $('#playerbutton2').hide();
+      $('#submitbutton').hide();
+
+
+    }
+  }
+
+  $(() => {
+    checkFormState();
+  });
+
+  const addNewTournamentStateHandler = () => {
+    addNewTournamentState = !addNewTournamentState;
+    checkFormState();
+  }
+
+  let numberOfSegments = 1;
+
+  const executeSegments = () => {
+    document.getElementById("segment-info").innerHTML = "";
+    for (let i = 1; i <= numberOfSegments; i++) {
+      document.getElementById("segment-info").innerHTML +=
+        "<h3>Segment " +
+        i +
+        '</h3> <div> <label for="start-time-segment-' +
+        i +
+        '">Start Time:</label> <input type="text" name="start-time-segment-' +
+        i +
+        '" id="start-time-segment-' +
+        i +
+        '" /> </div> <div> <label for="num-of-boards-' +
+        i +
+        '">Number of Boards:</label> <input type="number" name="num-of-boards-' +
+        i +
+        '" id="num-of-boards-' +
+        i +
+        '" /> </div> <div> <input type="checkbox" name="is-start-board-' +
+        i +
+        '" id="is-start-board-' +
+        i +
+        '" value="on" /> <label for="start-board-num-' +
+        i +
+        '">Starting Board Number:</label> <input type="number" name="start-board-num-' +
+        i +
+        '" id="start-board-num-' +
+        i +
+        '" /> </div>';
+    }
+  };
+
+  $(() => {
+    executeSegments();
+  });
+
+  const getSegments = (e) => {
+    if ($(e).val() > 0) numberOfSegments = $(e).val();
+
+    executeSegments();
+  };
+  $("#session-info").change(function () {
+    varname = $("#session-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      $.get(
+        "/tournament_ajax3?session_name=" + varname,
+        function (data, status) {
+          if (data[0][0]["fields"]["allow_kibitzers"]==true){
+          console.log(data[0][0]["fields"]["allow_kibitzers"])
+           $("#is-kibitzers").prop('checked', true);
+          }
+          if (data[0][0]["fields"]["allow_undo"]==true){
+
+           $("#is-undo").prop('checked', true);
+          }
+           if (data[0][0]["fields"]["no_invite"]==true){
+
+           $("#no-invite").prop('checked', true);
+          }
+          if (data[0][0]["fields"]["barometer"]==true){
+
+           $("#is-barometer").prop('checked', true);
+          }
+          if (data[0][0]["fields"]["other_hacks"]==true){
+
+           $("#other-hacks").prop('checked', true);
+          }
+          if (data[0][0]["fields"]["slow"]==true){
+
+           $("#is-slow").prop('checked', true);
+          }
+          if (data[0][0]["fields"]["use_predealt"]==true){
+
+           $("#is-predealt-boards").prop('checked', true);
+          }
+          $("#session-name").val(data[0][0]["fields"]["session_name"]);
+          $("#format").val(data[0][0]["fields"]["format"]);
+          $("#scoring").val(data[0][0]["fields"]["scoring"]);
+          $("#host").val(data[0][0]["fields"]["host"]);
+          $("#num-of-seg").val(data[0][0]["fields"]["num_segs"]);
+          $("#num-of-teams").val(data[0][0]["fields"]["num_teams"]);
+          document.getElementById("segment-info").innerHTML = "";
+          for (let i = 1; i <= data[1].length; i++) {
+            document.getElementById("segment-info").innerHTML +=
+              "<h3>Segment " +
+              i +
+              '</h3> <div> <label for="start-time-segment-' +
+              i +
+              '">Start Time:</label> <input type="text" name="start-time-segment-' +
+              i +
+              '" id="start-time-segment-' +
+              i +
+              '" /> </div> <div> <label for="num-of-boards-' +
+              i +
+              '">Number of Boards:</label> <input type="number" name="num-of-boards-' +
+              i +
+              '" id="num-of-boards-' +
+              i +
+              '" /> </div> <div> <input type="checkbox" name="is-start-board-' +
+              i +
+              '" id="is-start-board-' +
+              i +
+              '" value="on" /> <label for="start-board-num-' +
+              i +
+              '">Starting Board Number:</label> <input type="number" name="start-board-num-' +
+              i +
+              '" id="start-board-num-' +
+              i +
+              '" /> </div>';
+          }
+          for (i=0;i<data[1].length;i++){
+
+          $("#start-time-segment-"+(i+1)).val(data[1][i]["start_time"]);
+          $("#num-of-boards-"+(i+1)).val(data[1][i]["number_of_boards"]);
+           $("#start-board-num-"+(i+1)).val(data[1][i]["starting_board_number"]);}
+
+<!--          $("#start-time-segment-"(i+1)).val(data[1][i]["start_time"]);}-->
+<!--          $("#num-of-boards-2").val(data[1][1]["number_of_boards"]);-->
+<!--          $("#start-board-num-3").val(data[1][1]["starting_board_number"]);-->
+<!--          $("#start-time-segment-2").val(data[1][2]["start_time"]);-->
+<!--          $("#num-of-boards-3").val(data[1][2]["number_of_boards"]);-->
+<!--          $("#start-board-num-3").val(data[1][2]["starting_board_number"]);-->
         }
-      }
+      );
+    }
+  });
+  $("#tournament-info").change(function () {
+    varname = $("#tournament-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      x = [];
+      x = 0;
+      $.get("/ajax_session_new?id=" + varname, function (data, status) {
+        variable = '<option value="select">select</option>';
+        for (i = 0; i < data[0][varname].length; i++) {
+          variable +=
+            '<option value="' +
+            data[0][varname][i].session_name +
+            '">' +
+            data[0][varname][i].session_name +
+            "</option>";
+        }
 
-      $(() => {
-        executeSegments();
-      })
-
-      const getSegments = (e) => {
-        if($(e).val() > 0) 
-          numberOfSegments = $(e).val();
-
-        executeSegments();
-      }
-    </script>
-    {% endblock %}
-
-
+        //  for (i=0;i<=(data[0][varname].length);i++){
+        //  x[i]=(data[0][varname][i]);
+        //  variable +='<option value="'+(i+1)+'">'+(i+1)+'</option>'
+        //  }
+        document.getElementById("session-info").innerHTML = variable;
+      });
+    }
+  });
+</script>
+{% endblock %}

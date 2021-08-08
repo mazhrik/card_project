@@ -15,6 +15,7 @@
   <div>
     <label for="tournament-info">for</label>
     <select name="tournament-info" id="tournament-info">
+      <option value="select">select</option>
       {% for i in tournament_objects %}
       <option value="{{ i.pk }}">{{ i }}</option>
       {% endfor %}
@@ -28,14 +29,14 @@
     <div>
       <input type="button" name="show-all" id="show-all" value="Show All" />
     </div>
-    <div>
-      <input
-        type="button"
-        name="add-new-team"
-        id="add-new-team"
-        value="Add New Team"
-      />
-    </div>
+<!--    <div>-->
+<!--      <input-->
+<!--        type="button"-->
+<!--        name="add-new-team"-->
+<!--        id="add-new-team"-->
+<!--        value="Add New Team"-->
+<!--      />-->
+<!--    </div>-->
   </div>
 
   <div>
@@ -46,8 +47,9 @@
         <th>Team Name</th>
         <th>Team Captain</th>
       </tr>
-      {% for i in team_objects %}
-      <tr name="{{ i.pk }}" id="{{ i.pk }}">
+
+      <tbody id="tableBodyy">
+      <tr id="table_tablee">
         <td name="team-no" id="team-no">{{ i.pk }}</td>
         <td>
           <input
@@ -60,7 +62,8 @@
         <td name="team-name" id="team-name">{{ i.team_name }}</td>
         <td name="team-captain" id="team-captain">{{ i.cap_name }}</td>
       </tr>
-      {% endfor %}
+      </tbody>
+
     </table>
   </div>
 </div>
@@ -69,15 +72,67 @@
 <!-- ---------------------------------------------------------------------- -->
 {% block extrafooter %}
 <script>
-  var i;
-  var list_len = {{ team_objects|length }};
+<!--  var i;-->
+<!--  var list_len = {{ team_objects|length }};-->
 
-  for(i = 0; i < list_len; i++){
-    if ($('#is-active').val() == 'True'){
-      $('#is-active').attr('checked', 'checked')
-      console.log(i)
+<!--  for(i = 0; i < list_len; i++){-->
+<!--    if ($('#is-active').val() == 'True'){-->
+<!--      $('#is-active').attr('checked', 'checked')-->
+<!--      console.log(i)-->
 
+<!--    }-->
+<!--  }-->
+
+ $("#tournament-info").change(function () {
+    varname = $("#tournament-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      $.get("/ajax_teamsummary?id=" + varname, function (data, status) {
+        console.log(data[0]);
+        $("#tableBodyy").empty();
+        let str = "";
+        data[0].forEach((item) => {
+          console.log("item :", item);
+          if (item.fields.is_active == true) {
+            str +=
+              "<tr id='table_tablee'>" +
+              "<td name='team-number' id='team-number'>" +
+              item.fields.team_number +
+              "</td>" +
+              "<td><input type='checkbox' name='is-active' id='is-active' checked =" +
+              item.fields.is_active +
+              " /> </td>" +
+              "<td name='team-name' id='team-name'>" +
+              item.fields.team_name +
+              "</td>" +
+              "<td name='team-captain' id='team-captain'>" +
+              item.fields.cap_name +
+              "</td>" +
+              "</tr>";
+          } else {
+            str +=
+              "<tr id='table_tablee'>" +
+              "<td name='team-number' id='team-number'>" +
+              item.fields.team_number +
+              "</td>" +
+              "<td><input type='checkbox' name='is-active' id='is-active' " +
+              item.fields.is_active +
+              " /> </td>" +
+              "<td name='team-name' id='team-name'>" +
+              item.fields.team_name +
+              "</td>" +
+              "<td name='team-captain' id='team-captain'>" +
+              item.fields.cap_name +
+              "</td>" +
+              "</tr>";
+          }
+        });
+
+        $("#tableBodyy").html(str);
+      });
     }
-  }
+  });
 </script>
 {% endblock %}

@@ -48,7 +48,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone = models.CharField(max_length=20)
     organization = models.CharField(max_length=100)
-    
+
     def __str__(self):
         return self.user.username
 
@@ -74,17 +74,10 @@ class Tournament(models.Model):
 
     def __str__(self):
         return self.title
-    
-    
-class TD(models.Model):
-    bbo_username = models.CharField(primary_key=True, max_length=50)
-    name = models.CharField(max_length=50, null=True)
-    is_global = models.BooleanField()
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, null=True)
 
-    def __str__(self):
-        return self.name
-    
+
+
+
 
 # class TournamentTD(models.Model):
 #     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
@@ -95,10 +88,17 @@ class TD(models.Model):
 # class Scoring(models.Model):
 #     scoring_id = models.IntegerField(primary_key=True)
 
+
+
+
 class Segment(models.Model):
+
     start_time = models.CharField(max_length=100, null=True)
     number_of_boards = models.CharField(max_length=50, null=True)
-    starting_board_number = models.CharField(max_length=50, null=True) 
+    starting_board_number = models.CharField(max_length=50, null=True)
+
+
+
 
 class Session(models.Model):
     # FORMAT = (
@@ -183,18 +183,30 @@ class Team(models.Model):
 
 
 class Match(models.Model):
-    session_id = models.ForeignKey(Session, on_delete=models.CASCADE)
+    segement_id = models.ForeignKey(Segment, on_delete=models.CASCADE, null=True)
+    session_id = models.ForeignKey(Session, on_delete=models.CASCADE, default=True)
     # segment
     match_num = models.IntegerField(unique=True, null=True)
     team1 = models.ForeignKey(
         Team, on_delete=models.CASCADE, related_name='team1')
     team2 = models.ForeignKey(
         Team, on_delete=models.CASCADE, related_name='team2')
+
     # seating_rights
 
     def __str__(self):
         return str(self.match_num)
 
+class TD(models.Model):
+    bbo_username = models.CharField(primary_key=True, max_length=50,unique=True)
+    name = models.CharField(max_length=50, null=True)
+    is_global = models.BooleanField()
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, null=True)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, null=True)
+
+
+    def __str__(self):
+        return self.name
 
 # class GlobalTD(models.Model):
 #     bbo_username = models.ForeignKey(TD, on_delete=models.CASCADE)
@@ -214,9 +226,9 @@ class Match(models.Model):
 
 class Seating(models.Model):
     team_id = models.ForeignKey(Team, on_delete=models.CASCADE)
-    session_id = models.ForeignKey(Session, on_delete=models.CASCADE)
-    segment_id = models.ForeignKey(Segment, on_delete=models.CASCADE)
-    north = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE,related_name="north",default=None)
-    south = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE,related_name="south",default=None)
-    east = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE,related_name="east",default=None)
-    west = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE,related_name="west",default=None)
+    session_id = models.ForeignKey(Session, on_delete=models.CASCADE, null=True)
+    segment_id = models.ForeignKey(Segment, on_delete=models.CASCADE, null=True)
+    north = models.CharField(max_length=255, null=True)
+    south = models.CharField(max_length=255, null=True)
+    east =models.CharField(max_length=255, null=True)
+    west = models.CharField(max_length=255, null=True)

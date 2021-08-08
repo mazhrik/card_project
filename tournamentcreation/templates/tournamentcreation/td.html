@@ -16,18 +16,14 @@
     <div>
       <label for="tournament-info">for</label>
       <select name="tournament-info" id="tournament-info">
+        <option value="select">select</option>
         {% for i in tournament_objects %}
         <option value="{{ i.pk }}">{{ i }}</option>
         {% endfor %}
       </select>
     </div>
     <div>
-      <input
-        type="button"
-        name="add-new-td"
-        id="add-new-td"
-        value="Add New TD"
-      />
+      <a href="/matchups/td/add/" style="color:white"/>Add New TD</a>
     </div>
     <div>
       <input
@@ -41,18 +37,55 @@
     <div>
       <table>
         <tr>
-          <th>BBO Username</th>
           <th>FUll Name</th>
+          <th>BBO Username</th>
           <th>Global TD</th>
         </tr>
-        {% for i in td_objects %}
-        <tr>
-          <td>{{ i }}</td>
+
+        <tbody id="tableBodyy">
+        <tr id="tabletable" >
+          <td name="id" id="id">{{ i }}</td>
+
+          <td name="bbo" id="bbo">{{ i.bbo_username }}</td>
+          <td name="global" id="global">{{ i.is_global}}</td>
         </tr>
-        {% endfor %}
+        </tbody>
       </table>
     </div>
   </div>
 </div>
 
-{% endblock %}
+{% endblock %} {% block extrafooter %}
+
+
+<script>
+    console.log('lorry')
+    $("#tournament-info").change(function () {
+          varname = $("#tournament-info").val();
+          if(varname === "0") {
+            $('#formContainer').find('input:text').val('');
+            $('#formContainer').find('input[type=date]').val('');
+          }
+          else {
+            $.get("/newajax_sessionsummary?id=" + varname, function (data, status) {
+            console.log(data[0])
+            $("#tableBodyy").empty();
+            let str="";
+            data[0].forEach((item)=>{
+            console.log("item :",item)
+              str +="<tr id='tabletable'>"+
+              "<td name='id' id='id'>"+item.fields.name+"</td>"+
+              "<td name='bbo' id='bbo'>"+item.pk+"</td>"+
+              "<td name='global' id='global'>"+item.fields.is_global+"</td>"+
+
+            "</tr>";
+    })
+    $("#tableBodyy").html(str);
+          });
+        }
+      });
+
+
+    </script>
+
+    {% endblock %}

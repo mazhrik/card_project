@@ -17,37 +17,133 @@
       <div>
         <label for="tournament-info">for</label>
         <select name="tournament-info" id="tournament-info">
+          <option value="select">select</option>
           {% for i in tournament_objects %}
           <option value="{{ i.pk }}">{{ i }}</option>
           {% endfor %}
         </select>
       </div>
-      <div>
-        <input
-          type="button"
-          name="add-new-td"
-          id="add-new-td"
-          value="Add New TD"
-        />
+<!--      <div id="selectteamcontainer">-->
+<!--          &lt;!&ndash;            <input type="text" name="txt" value="Hello" onchange="myFunction(this.value)">&ndash;&gt;-->
+<!--          <label for="team-info">Select team to veiw/edit:</label>-->
+<!--          <select name="team-info" id="team-info">-->
+<!--            &lt;!&ndash;            {% for i in team_objects %}&ndash;&gt;-->
+<!--            &lt;!&ndash;              <option value="{{ i.pk }}">{{ i }}</option>&ndash;&gt;-->
+<!--            &lt;!&ndash;            {% endfor %}&ndash;&gt;-->
+<!--          </select>-->
+<!--        </div>-->
+       <div>
+         <a href="td/add/" style="color:white"/>Add New TD</a>
       </div>
       <div>
-        <table>
-          <tr>
-            <th>Match</th>
-            {% for i in td_objects %}
-            <th>{{ i.bbo_username }}</th>
-            {% endfor %}
-          </tr>
-          {% for i in td_objects %}
-          <tr>
-            <td>{{ i }}</td>
-            <!-- <td>{{ j }}</td> -->
-          </tr>
-          {% endfor %}
-        </table>
-      </div>
+    <table>
+      <tr  id="tableHeading">
+        <th>Matches #</th>
+        <th>team</th>
+        <th>Team Name</th>
+        <th>Team Captain</th>
+      </tr>
+
+      <tbody id="tableBody">
+      <tr id="table_tablee">
+        <td name="team-no" id="team-no">{{ i }}</td>
+        <td>
+          <input
+            type="checkbox"
+            name="is-active1"
+            id="is-active1"
+            value="{{ i.is_active }}"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            name="is-active2"
+            id="is-active2"
+            value="{{ i.is_active }}"
+          />
+        </td>
+
+        <td>
+          <input
+            type="checkbox"
+            name="is-active3"
+            id="is-active3"
+            value="{{ i.is_active }}"
+          />
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
     </div>
   </form>
 </div>
+
+{% endblock %}
+{% block extrafooter %}
+
+<script>
+
+
+  $("#tournament-info").change(function () {
+    varname = $("#tournament-info").val();
+    if (varname === "0") {
+      $("#formContainer").find("input:text").val("");
+      $("#formContainer").find("input[type=date]").val("");
+    } else {
+      x = [];
+      $.get("/ajax_call_tournament_tomatch?id=" + varname, function (data, status) {
+
+        $("#tableHeading").empty();
+        console.log('heloo',data);
+        $("#tableHeading").empty();
+        var str ="";
+        str+="<th>Matches #</th>";
+
+        data[1].forEach((item,index)=>{
+        str+="<th>"+item+"</th>";
+        });
+        $("#tableHeading").html(str);
+
+        let dataStr="";
+
+        data[0].forEach((item,index)=>{
+        dataStr+=" <tr id='table_tablee'>"+
+        "<td name='team-no' id='team-no'>"+item+"</td>";
+        data[1].forEach((element,i)=>{
+        const value = element;
+        dataStr+=" <td>"+
+          "<input "+
+            "type='checkbox'"+
+           " name='is-active1'"+
+           " value="+element+" "+
+            "onChange='updateTeam("+item+","+`value`+")'"+
+          "/>"+
+        "</td>";
+        });
+        dataStr+="</tr>";
+        })
+
+        $("#tableBody").html(dataStr);
+
+
+
+      });
+    }
+  });
+
+
+function updateTeam(match,td){
+console.log(match," ",td);
+const data = JSON.stringify({match_id:match, td_name:td})
+ $.get("/ajaxcall_td_function/"+match+"/"+td+"/", data,function (data, status){
+ console.log("data sent : ", data);
+ })
+}
+
+
+</script>
 
 {% endblock %}
