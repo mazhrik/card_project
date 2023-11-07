@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-w_xyliwy95eefus#mmc-ne%y!e=izlt2h7qxcl_+m2q-egtk_e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,16 +76,23 @@ WSGI_APPLICATION = 'bridgebase.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'card_game',
+#         'USER': 'postgres',
+#         'PASSWORD': 'cypher@12345',
+#         'HOST':'localhost',
+#         'PORT':'5432'
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'card_game',
-        'USER': 'postgres',
-        'PASSWORD': 'cypher@12345',
-        'HOST':'localhost',
-        'PORT':'5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # Password validation
